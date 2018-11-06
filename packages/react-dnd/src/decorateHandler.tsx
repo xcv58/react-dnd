@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { DragDropManager, Identifier } from 'dnd-core'
 import { DndComponentClass, DndComponent } from './interfaces'
-import { Consumer } from './DragDropContext'
+import { DragDropContextType } from './DragDropContext'
 import {
 	Disposable,
 	CompositeDisposable,
@@ -205,8 +205,8 @@ export default function decorateHandler<Props, TargetClass, ItemIdType>({
 
 		public render() {
 			return (
-				<Consumer>
-					{({ dragDropManager }) => {
+				<DragDropContextType.Consumer>
+					{dragDropManager => {
 						if (dragDropManager === undefined) {
 							return null
 						}
@@ -229,7 +229,7 @@ export default function decorateHandler<Props, TargetClass, ItemIdType>({
 							/>
 						)
 					}}
-				</Consumer>
+				</DragDropContextType.Consumer>
 			)
 		}
 

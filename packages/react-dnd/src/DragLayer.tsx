@@ -2,7 +2,7 @@ import * as React from 'react'
 import checkDecoratorArguments from './utils/checkDecoratorArguments'
 import { DragDropManager, Unsubscribe } from 'dnd-core'
 import { DragLayerCollector, DndOptions, DndComponentClass } from './interfaces'
-import { Consumer } from './DragDropContext'
+import { DragDropContextType } from './DragDropContext'
 const hoistStatics = require('hoist-non-react-statics')
 const isPlainObject = require('lodash/isPlainObject')
 const invariant = require('invariant')
@@ -88,8 +88,8 @@ export default function DragLayer<Props, CollectedProps = {}>(
 
 			public render() {
 				return (
-					<Consumer>
-						{({ dragDropManager }) => {
+					<DragDropContextType.Consumer>
+						{dragDropManager => {
 							if (dragDropManager === undefined) {
 								return null
 							}
@@ -107,7 +107,7 @@ export default function DragLayer<Props, CollectedProps = {}>(
 								/>
 							)
 						}}
-					</Consumer>
+					</DragDropContextType.Consumer>
 				)
 			}
 

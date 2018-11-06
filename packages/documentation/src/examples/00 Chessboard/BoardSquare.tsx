@@ -5,6 +5,7 @@ import {
 	DropTargetConnector,
 	DropTargetCollector,
 	ConnectDropTarget,
+	useDropTargetConnector,
 } from 'react-dnd'
 import Square from './Square'
 import { canMoveKnight, moveKnight } from './Game'
@@ -44,7 +45,8 @@ const collect: DropTargetCollector<CollectedProps> = (
 
 class BoardSquare extends React.Component<BoardSquareProps> {
 	public render() {
-		const { x, y, connectDropTarget, isOver, canDrop, children } = this.props
+		const { x, y, isOver, canDrop, children } = this.props
+		const connectDropTarget = useDropTargetConnector()
 		const black = (x + y) % 2 === 1
 
 		return (
