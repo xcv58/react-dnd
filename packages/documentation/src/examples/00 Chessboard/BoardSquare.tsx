@@ -33,55 +33,52 @@ const collect: DropTargetCollector<CollectedProps> = (
 	}
 }
 
+interface OverlayProps {
+	color: string
+}
+const Overlay: React.SFC<OverlayProps> = ({ color }) => (
+	<div
+		style={{
+			position: 'absolute',
+			top: 0,
+			left: 0,
+			height: '100%',
+			width: '100%',
+			zIndex: 1,
+			opacity: 0.5,
+			backgroundColor: color,
+		}}
+	/>
+)
+
 const dropTarget = createDropTarget(ItemTypes.KNIGHT, {
 	canDrop: (props: BoardSquareProps) => canMoveKnight(props.x, props.y),
 	drop: (props: BoardSquareProps) => moveKnight(props.x, props.y),
 })
 
-class BoardSquare extends React.Component<BoardSquareProps> {
-	public render() {
-		const { x, y, children } = this.props
-		const black = (x + y) % 2 === 1
+const BoardSquare: React.SFC<BoardSquareProps> = ({ x, y, children }) => {
+	const black = (x + y) % 2 === 1
+	const [connectDropTarget, isOver, canDrop] = useDnd(
+		dropTarget,
+		connect => connect.dropTarget,
+		(connect, monitor) => !!monitor.isOver,
+		(connect, monitor) => !!monitor.canDrop,
+	)
 
-		const [connectDropTarget, isOver, canDrop] = useDnd(
-			dropTarget,
-			connect => connect.dropTarget,
-			(connect, monitor) => !!monitor.isOver,
-			(connect, monitor) => !!monitor.canDrop,
-		)
-
-		return connectDropTarget(
-			<div
-				style={{
-					position: 'relative',
-					width: '100%',
-					height: '100%',
-				}}
-			>
-				<Square black={black}>{children}</Square>
-				{isOver && !canDrop && this.renderOverlay('red')}
-				{!isOver && canDrop && this.renderOverlay('yellow')}
-				{isOver && canDrop && this.renderOverlay('green')}
-			</div>,
-		)
-	}
-
-	private renderOverlay(color: string) {
-		return (
-			<div
-				style={{
-					position: 'absolute',
-					top: 0,
-					left: 0,
-					height: '100%',
-					width: '100%',
-					zIndex: 1,
-					opacity: 0.5,
-					backgroundColor: color,
-				}}
-			/>
-		)
-	}
+	return connectDropTarget(
+		<div
+			style={{
+				position: 'relative',
+				width: '100%',
+				height: '100%',
+			}}
+		>
+			<Square black={black}>{children}</Square>
+			{isOver && !canDrop && <Overlay color={'red'} />}
+			{!isOver && canDrop && <Overlay color={'yellow'} />}
+			{isOver && canDrop && <Overlay color={'green'} />}
+		</div>,
+	)
 }
 
 // export default DropTarget(ItemTypes.KNIGHT, squareTarget, collect)(BoardSquare)
