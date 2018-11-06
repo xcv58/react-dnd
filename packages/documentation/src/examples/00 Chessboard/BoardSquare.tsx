@@ -22,16 +22,6 @@ export interface BoardSquareProps extends CollectedProps {
 	children: any
 }
 
-const squareTarget = {
-	canDrop(props: BoardSquareProps) {
-		return canMoveKnight(props.x, props.y)
-	},
-
-	drop(props: BoardSquareProps) {
-		moveKnight(props.x, props.y)
-	},
-}
-
 const collect: DropTargetCollector<CollectedProps> = (
 	connect: DropTargetConnector,
 	monitor: DropTargetMonitor,
@@ -43,28 +33,36 @@ const collect: DropTargetCollector<CollectedProps> = (
 	}
 }
 
+const dropTarget = createDropTarget(ItemTypes.KNIGHT, {
+	canDrop: (props: BoardSquareProps) => canMoveKnight(props.x, props.y),
+	drop: (props: BoardSquareProps) => moveKnight(props.x, props.y),
+})
+
 class BoardSquare extends React.Component<BoardSquareProps> {
 	public render() {
-		const { x, y, isOver, canDrop, children } = this.props
-		const connectDropTarget = useDropTargetConnector()
+		const { x, y, children } = this.props
 		const black = (x + y) % 2 === 1
 
-		return (
-			connectDropTarget &&
-			connectDropTarget(
-				<div
-					style={{
-						position: 'relative',
-						width: '100%',
-						height: '100%',
-					}}
-				>
-					<Square black={black}>{children}</Square>
-					{isOver && !canDrop && this.renderOverlay('red')}
-					{!isOver && canDrop && this.renderOverlay('yellow')}
-					{isOver && canDrop && this.renderOverlay('green')}
-				</div>,
-			)
+		const [connectDropTarget, isOver, canDrop] = useDnd(
+			dropTarget,
+			connect => connect.dropTarget,
+			(connect, monitor) => !!monitor.isOver,
+			(connect, monitor) => !!monitor.canDrop,
+		)
+
+		return connectDropTarget(
+			<div
+				style={{
+					position: 'relative',
+					width: '100%',
+					height: '100%',
+				}}
+			>
+				<Square black={black}>{children}</Square>
+				{isOver && !canDrop && this.renderOverlay('red')}
+				{!isOver && canDrop && this.renderOverlay('yellow')}
+				{isOver && canDrop && this.renderOverlay('green')}
+			</div>,
 		)
 	}
 
@@ -86,4 +84,4 @@ class BoardSquare extends React.Component<BoardSquareProps> {
 	}
 }
 
-export default DropTarget(ItemTypes.KNIGHT, squareTarget, collect)(BoardSquare)
+// export default DropTarget(ItemTypes.KNIGHT, squareTarget, collect)(BoardSquare)
