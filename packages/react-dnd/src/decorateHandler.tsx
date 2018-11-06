@@ -73,32 +73,30 @@ export default function decorateHandler<Props, TargetClass, ItemIdType>({
 
 		constructor(props: Props) {
 			super(props)
-			this.handleChange = this.handleChange.bind(this)
-
 			this.disposable = new SerialDisposable()
 			this.receiveProps(props)
 			this.dispose()
 		}
 
-		public getHandlerId() {
+		public getHandlerId = () => {
 			return this.handlerId as string
 		}
 
-		public getDecoratedComponentInstance() {
+		public getDecoratedComponentInstance = () => {
 			if (!this.handler) {
 				return null
 			}
 			return this.handler.ref.current as any
 		}
 
-		public shouldComponentUpdate(nextProps: any, nextState: any) {
+		public shouldComponentUpdate = (nextProps: any, nextState: any) => {
 			return (
 				!arePropsEqual(nextProps, this.props) ||
 				!shallowEqual(nextState, this.state)
 			)
 		}
 
-		public componentDidMount() {
+		public componentDidMount = () => {
 			this.isCurrentlyMounted = true
 			this.disposable = new SerialDisposable()
 			this.currentType = undefined
@@ -106,19 +104,19 @@ export default function decorateHandler<Props, TargetClass, ItemIdType>({
 			this.handleChange()
 		}
 
-		public componentDidUpdate(prevProps: Props) {
+		public componentDidUpdate = (prevProps: Props) => {
 			if (!arePropsEqual(this.props, prevProps)) {
 				this.receiveProps(this.props)
 				this.handleChange()
 			}
 		}
 
-		public componentWillUnmount() {
+		public componentWillUnmount = () => {
 			this.dispose()
 			this.isCurrentlyMounted = false
 		}
 
-		public receiveProps(props: any) {
+		public receiveProps = (props: any) => {
 			if (!this.handler) {
 				return
 			}
@@ -126,7 +124,7 @@ export default function decorateHandler<Props, TargetClass, ItemIdType>({
 			this.receiveType(getType(props))
 		}
 
-		public receiveType(type: any) {
+		public receiveType = (type: any) => {
 			if (!this.handlerMonitor || !this.manager || !this.handlerConnector) {
 				return
 			}
@@ -161,7 +159,7 @@ export default function decorateHandler<Props, TargetClass, ItemIdType>({
 			)
 		}
 
-		public handleChange() {
+		public handleChange = () => {
 			if (!this.isCurrentlyMounted) {
 				return
 			}
@@ -172,14 +170,14 @@ export default function decorateHandler<Props, TargetClass, ItemIdType>({
 			}
 		}
 
-		public dispose() {
+		public dispose = () => {
 			this.disposable.dispose()
 			if (this.handlerConnector) {
 				this.handlerConnector.receiveHandlerId(null)
 			}
 		}
 
-		public getCurrentState() {
+		public getCurrentState = () => {
 			if (!this.handlerConnector) {
 				return {}
 			}
@@ -203,7 +201,7 @@ export default function decorateHandler<Props, TargetClass, ItemIdType>({
 			return nextState
 		}
 
-		public render() {
+		public render = () => {
 			return (
 				<DragDropContextType.Consumer>
 					{dragDropManager => {
@@ -233,7 +231,9 @@ export default function decorateHandler<Props, TargetClass, ItemIdType>({
 			)
 		}
 
-		private receiveDragDropManager(dragDropManager: DragDropManager<any>) {
+		private receiveDragDropManager = (
+			dragDropManager: DragDropManager<any>,
+		) => {
 			if (this.manager !== undefined) {
 				return
 			}

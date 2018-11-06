@@ -33,26 +33,26 @@ export default class DragDropManagerImpl<Context>
 		)
 		this.backend = createBackend(this)
 
-		store.subscribe(this.handleRefCountChange.bind(this))
+		store.subscribe(this.handleRefCountChange)
 	}
 
-	public getContext() {
+	public getContext = () => {
 		return this.context
 	}
 
-	public getMonitor(): DragDropMonitor {
+	public getMonitor: (() => DragDropMonitor) = () => {
 		return this.monitor
 	}
 
-	public getBackend() {
+	public getBackend = () => {
 		return this.backend
 	}
 
-	public getRegistry(): HandlerRegistry {
+	public getRegistry: (() => HandlerRegistry) = () => {
 		return (this.monitor as DragDropMonitorImpl).registry
 	}
 
-	public getActions(): DragDropActions {
+	public getActions: (() => DragDropActions) = () => {
 		const manager = this
 		const { dispatch } = this.store
 
@@ -79,11 +79,11 @@ export default class DragDropManagerImpl<Context>
 		)
 	}
 
-	public dispatch(action: any) {
+	public dispatch = (action: any) => {
 		this.store.dispatch(action)
 	}
 
-	private handleRefCountChange() {
+	private handleRefCountChange = () => {
 		const shouldSetUp = this.store.getState().refCount > 0
 		if (shouldSetUp && !this.isSetUp) {
 			this.backend.setup()

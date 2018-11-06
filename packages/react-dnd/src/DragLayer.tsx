@@ -49,12 +49,7 @@ export default function DragLayer<Props, CollectedProps = {}>(
 			private unsubscribeFromStateChange: Unsubscribe | undefined
 			private ref: React.RefObject<any> = React.createRef()
 
-			constructor(props: Props) {
-				super(props)
-				this.handleChange = this.handleChange.bind(this)
-			}
-
-			public getDecoratedComponentInstance() {
+			public getDecoratedComponentInstance = () => {
 				invariant(
 					this.ref.current,
 					'In order to access an instance of the decorated component it can not be a stateless component.',
@@ -62,19 +57,19 @@ export default function DragLayer<Props, CollectedProps = {}>(
 				return this.ref.current
 			}
 
-			public shouldComponentUpdate(nextProps: any, nextState: any) {
+			public shouldComponentUpdate = (nextProps: any, nextState: any) => {
 				return (
 					!arePropsEqual(nextProps, this.props) ||
 					!shallowEqual(nextState, this.state)
 				)
 			}
 
-			public componentDidMount() {
+			public componentDidMount = () => {
 				this.isCurrentlyMounted = true
 				this.handleChange()
 			}
 
-			public componentWillUnmount() {
+			public componentWillUnmount = () => {
 				this.isCurrentlyMounted = false
 				if (this.unsubscribeFromOffsetChange) {
 					this.unsubscribeFromOffsetChange()
@@ -86,7 +81,7 @@ export default function DragLayer<Props, CollectedProps = {}>(
 				}
 			}
 
-			public render() {
+			public render = () => {
 				return (
 					<DragDropContextType.Consumer>
 						{dragDropManager => {
@@ -111,7 +106,9 @@ export default function DragLayer<Props, CollectedProps = {}>(
 				)
 			}
 
-			private receiveDragDropManager(dragDropManager: DragDropManager<any>) {
+			private receiveDragDropManager = (
+				dragDropManager: DragDropManager<any>,
+			) => {
 				if (this.manager !== undefined) {
 					return
 				}
@@ -134,7 +131,7 @@ export default function DragLayer<Props, CollectedProps = {}>(
 				)
 			}
 
-			private handleChange() {
+			private handleChange = () => {
 				if (!this.isCurrentlyMounted) {
 					return
 				}
@@ -145,7 +142,7 @@ export default function DragLayer<Props, CollectedProps = {}>(
 				}
 			}
 
-			private getCurrentState() {
+			private getCurrentState = () => {
 				if (!this.manager) {
 					return {}
 				}

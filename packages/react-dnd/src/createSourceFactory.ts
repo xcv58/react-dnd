@@ -50,15 +50,13 @@ export default function createSourceFactory<Props, DragObject = {}>(
 		private props: Props | null = null
 		private ref: React.RefObject<any> = createRef()
 
-		constructor(private monitor: DragSourceMonitor) {
-			this.beginDrag = this.beginDrag.bind(this)
-		}
+		constructor(private monitor: DragSourceMonitor) {}
 
-		public receiveProps(props: any) {
+		public receiveProps = (props: any) => {
 			this.props = props
 		}
 
-		public canDrag() {
+		public canDrag = () => {
 			if (!this.props) {
 				return false
 			}
@@ -69,7 +67,7 @@ export default function createSourceFactory<Props, DragObject = {}>(
 			return spec.canDrag(this.props, this.monitor)
 		}
 
-		public isDragging(globalMonitor: DragDropMonitor, sourceId: string) {
+		public isDragging = (globalMonitor: DragDropMonitor, sourceId: string) => {
 			if (!this.props) {
 				return false
 			}
@@ -80,7 +78,7 @@ export default function createSourceFactory<Props, DragObject = {}>(
 			return spec.isDragging(this.props, this.monitor)
 		}
 
-		public beginDrag() {
+		public beginDrag = () => {
 			if (!this.props) {
 				return
 			}
@@ -98,7 +96,7 @@ export default function createSourceFactory<Props, DragObject = {}>(
 			return item
 		}
 
-		public endDrag() {
+		public endDrag = () => {
 			if (!this.props) {
 				return
 			}
