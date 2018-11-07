@@ -1,1 +1,1 @@
-export * from './useDropTargetConnector'
+export * from './useDnd'

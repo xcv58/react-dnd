@@ -85,19 +85,21 @@ class Card extends React.Component<
 	}
 }
 
-export default DropTarget<CardProps, CardTargetCollectedProps>(
-	ItemTypes.CARD,
-	cardTarget,
-	connect => ({
-		connectDropTarget: connect.dropTarget(),
-	}),
-)(
-	DragSource<CardProps, CardSourceCollectedProps>(
-		ItemTypes.CARD,
-		cardSource,
-		(connect, monitor) => ({
-			connectDragSource: connect.dragSource(),
-			isDragging: monitor.isDragging(),
-		}),
-	)(Card),
-)
+const dropTarget = createDropTarget(ItemTypes.CARD, cardTarget)
+const dragSource = createDragSource(ItemTypes.CARD, cardSource)
+
+function Card({ text }) {
+	const ref = useRef(null)
+	const [isDragging] = useDnd(
+		connect =>
+			connect(
+				ref,
+				dropTarget,
+				dragSource,
+			),
+		monitor => monitor.isDragging,
+	)
+	const opacity = isDragging ? 0 : 1
+
+	return <div style={{ ...style, opacity }}>{text}</div>
+}
