@@ -35,9 +35,6 @@ export default function decorateHandler<Props, ItemIdType>({
 	// const { arePropsEqual = shallowEqual } = options
 	const Decorated: any = DecoratedComponent
 
-	const displayName =
-		DecoratedComponent.displayName || DecoratedComponent.name || 'Component'
-
 	const DragDropContainer = (props: Props) => {
 		const manager = useDragDropManager()
 		const handlerMonitor = React.useMemo(() => createMonitor(manager), [
@@ -108,6 +105,10 @@ export default function decorateHandler<Props, ItemIdType>({
 			/>
 		)
 	}
+
+	const displayName =
+		DecoratedComponent.displayName || DecoratedComponent.name || 'Component'
+	DragDropContainer.displayName = `${containerDisplayName}(${displayName})`
 
 	return DragDropContainer as any
 }
