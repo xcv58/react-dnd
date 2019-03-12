@@ -9,6 +9,11 @@ const invariant = require('invariant')
  */
 export function useDragDropManager<Context>(): DragDropManager<Context> {
 	const { dragDropManager } = useContext(context)
-	invariant(dragDropManager != null, 'Expected drag drop context')
+	invariant(
+		typeof dragDropManager === 'object',
+		'Could not find the drag and drop manager. ' +
+			'Make sure to use a DragDropContextProvider in your app.' +
+			'Read more: http://react-dnd.github.io/react-dnd/docs-troubleshooting.html#could-not-find-the-drag-and-drop-manager-in-the-context',
+	)
 	return dragDropManager as DragDropManager<Context>
 }
