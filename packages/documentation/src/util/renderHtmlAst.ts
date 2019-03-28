@@ -5,6 +5,7 @@ import { componentIndex as hookComponentIndex } from 'react-dnd-examples-hooks/l
 import { parse } from 'query-string'
 import processImages from './processImagesInMarkdownAst'
 import ViewSource from '../components/viewsource'
+import Sandbox from '../components/sandbox'
 import SandboxedSnippet from '../components/sandboxedsnippet'
 const log = require('debug')('site:renderHtmlAst')
 const rehypeReact = require('rehype-react')
@@ -22,6 +23,7 @@ export function isExperimentalApiMode() {
 const renderAst = new rehypeReact({
 	createElement,
 	components: {
+		sandbox: Sandbox,
 		'sandboxed-snippet': SandboxedSnippet,
 		'view-source': ViewSource,
 		...(isExperimentalApiMode() ? hookComponentIndex : componentIndex),

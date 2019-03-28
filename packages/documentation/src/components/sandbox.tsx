@@ -1,10 +1,9 @@
 import React from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import ReactMarkdown from 'react-markdown'
-import Sandbox from './sandbox'
 import 'react-tabs/style/react-tabs.css'
 
-export interface ExampleTabsProps {
+export interface SandboxProps {
 	name: string
 }
 
@@ -19,23 +18,15 @@ const frameStyle: React.CSSProperties = {
 const jsUrl = (name: string) =>
 	`https://codesandbox.io/embed/github/react-dnd/react-dnd/tree/docs/sandboxed_tutorial_steps/packages/documentation/sandboxes/${name}?fontsize=14`
 
-const ExampleTabs: React.FC<ExampleTabsProps> = ({ name, children }) => {
+const Sandbox: React.FC<SandboxProps> = ({ name }) => {
 	const url = jsUrl(name)
-	const script = `${children[0]}`
 	return (
-		<Tabs>
-			<TabList>
-				<Tab>Code</Tab>
-				<Tab>Sandbox</Tab>
-			</TabList>
-			<TabPanel>
-				<ReactMarkdown source={script} />
-			</TabPanel>
-			<TabPanel>
-				<Sandbox name={name} />
-			</TabPanel>
-		</Tabs>
+		<iframe
+			src={url}
+			style={frameStyle}
+			sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
+		/>
 	)
 }
 
-export default ExampleTabs
+export default Sandbox

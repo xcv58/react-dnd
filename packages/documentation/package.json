@@ -37,6 +37,7 @@
 		"react-dnd-test-backend": "^7.4.0",
 		"react-dom": "^16.8.5",
 		"react-helmet": "^5.2.0",
+		"react-markdown": "^4.0.6",
 		"react-tabs": "^3.0.0",
 		"react-typography": "^0.16.18",
 		"rehype-react": "^3.1.0",

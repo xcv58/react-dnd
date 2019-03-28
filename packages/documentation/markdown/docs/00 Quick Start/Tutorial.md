@@ -67,22 +67,14 @@ I prefer to start bottom-up, because this way I'm always working with something 
 In fact I'm going to start with the `Knight`. It doesn't have any props at all, and it's the easiest one to build:
 
 ```jsx
+// Knight.js
 import React from 'react'
 
 export default function Knight() {
   return <span>♘</span>
 }
-```
 
-<sandboxed-snippet name="tutorial/step0-knight-only">
-test
-</sandboxed-snippet>
-
-Yes, ♘ is the Unicode knight! It's gorgeous. We could've made its color a prop, but in our example we're not going to have any black knights, so there is no need for that.
-
-It seems to render fine, but just to be sure, I immediately changed my entry point to test it:
-
-```jsx
+// index.js
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Knight from './Knight'
@@ -90,7 +82,9 @@ import Knight from './Knight'
 ReactDOM.render(<Knight />, document.getElementById('root'))
 ```
 
-<img src='http://i.imgur.com/NktjTMn.png' width='512' height='384' alt='Screenshot'>
+<sandbox name="tutorial/step0-knight-only"></sandbox>
+
+Yes, ♘ is the Unicode knight! It's gorgeous. We could've made its color a prop, but in our example we're not going to have any black knights, so there is no need for that.
 
 I'm going to do this every time I work on another component, so that I always have something to render. In a larger app, I would use a component playground like [cosmos](https://github.com/skidding/cosmos) so I'd never write the components in the dark.
 
@@ -763,3 +757,7 @@ Happy dragging and dropping.
 <img src='https://s3.amazonaws.com/f.cl.ly/items/1F2g2F0D470X0d0k2A1U/Screen%20Recording%202015-05-15%20at%2002.22%20pm.gif' width='404' height='445' alt='Screenshot'>
 
 Now go and [play with it](/examples/tutorial)!
+
+```
+
+```
