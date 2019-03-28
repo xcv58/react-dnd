@@ -9,7 +9,7 @@ export interface SandboxProps {
 
 const frameStyle: React.CSSProperties = {
 	width: '100%',
-	height: 800,
+	height: 500,
 	border: 0,
 	borderRadius: 4,
 	overflow: 'hidden',
