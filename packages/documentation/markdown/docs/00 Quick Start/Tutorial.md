@@ -74,6 +74,10 @@ export default function Knight() {
 }
 ```
 
+<sandboxed-snippet name="tutorial/step0-knight-only">
+test
+</sandboxed-snippet>
+
 Yes, ♘ is the Unicode knight! It's gorgeous. We could've made its color a prop, but in our example we're not going to have any black knights, so there is no need for that.
 
 It seems to render fine, but just to be sure, I immediately changed my entry point to test it:
