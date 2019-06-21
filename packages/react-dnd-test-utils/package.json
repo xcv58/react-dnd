@@ -1,9 +1,8 @@
 {
 	"name": "react-dnd-test-utils",
-	"version": "7.6.1",
+	"version": "7.7.0",
 	"license": "MIT",
 	"main": "lib/cjs/index.js",
-	"module": "lib/esm/index.js",
 	"scripts": {
 		"clean": "rimraf lib",
 		"build:cjs": "tsc -b tsconfig.cjs.json",
@@ -14,8 +13,8 @@
 	"devDependencies": {
 		"npm-run-all": "^4.1.5",
 		"react": "^16.8.6",
-		"react-dnd": "^7.6.1",
-		"react-dnd-test-backend": "^7.6.0",
+		"react-dnd": "^7.7.0",
+		"react-dnd-test-backend": "^7.7.0",
 		"react-dom": "^16.8.6",
 		"rimraf": "^2.6.3",
 		"typescript": "^3.5.1"
